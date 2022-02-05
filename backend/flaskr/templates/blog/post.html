@@ -1,0 +1,118 @@
+{% extends 'blog/blog1.html' %}
+{% block content %}
+
+        <section class="breadcrumb_area">
+            <img class="breadcrumb_shap" src="img/breadcrumb/banner_bg.png" alt="">
+            <div class="container">
+                <div class="breadcrumb_content text-center">
+                    <h1 class="f_p f_700 f_size_50 w_color l_height50 mb_20">Blog List</h1>
+                    <p class="f_400 w_color f_size_16 l_height26">Why I say old chap that is spiffing off his nut arse pear shaped plastered<br> Jeffrey bodge barney some dodgy.!!</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="blog_area sec_pad">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        {% for list in query.items %}
+                        <div class="blog_list_item mb_50">
+                            <!-- <img class="img-fluid" src="img/blog-grid/blog_list1.jpg" alt=""> -->
+                            <video autoplay="autoplay" controls="controls" preload="preload" width="800" height="400">
+                                <source src="{{ url_for('static', filename='knowledge/' + list.image_file) }}" type="video/mp4"></source>
+                            </video>
+                            <div class="blog_content">
+                                <div class="post_date">
+                                    
+
+                                    <h6 class="text-danger">{{ list.date.day }} /<span>{{list.date.month }}</span></h6>
+                                    <h2>{{ list.date.year }}</h2>
+                                    
+                                </div>
+                                <div class="entry_post_info">
+                                    By: <a href="#">Admin</a>
+                                    <a href="#">2 Comments</a>
+                                    <a href="#">SaasLand</a>
+                                </div>
+                                <a href="post/{{ list.id }}">
+                                    <h5 class="f_p f_size_20 f_500 t_color mb_20">{{ list.topic }}</h5>
+                                </a>
+                                <p class="f_400 mb_20">{{ list.post }}</p>
+                                <a href="post/{{ list.id }}" class="learn_btn_two">Read More <i class="ti-arrow-right"></i></a>
+                                <p class="text-success ">{{ list.date.minute }} ago  <p>
+                            </div>
+                        </div>
+                        
+                        {% endfor %} 
+                        
+
+                        
+                            <ul class="list-unstyled page-numbers shop_page_number text-left mt_30">
+                            {% for page_num in query.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=2) %}
+                            {% if page_num%}
+                                {% if query.page == page_num %}
+                            <!-- <li><span aria-current="page" class="page-numbers current">1</span></li> -->
+                            <li><a class="page-numbers current " href="{{ url_for('blog',page=page_num)}}">{{ page_num }}</a></li>
+                                {% else %}
+                            <li><a class="page-numbers " href="{{ url_for('blog',page=page_num)}}">{{ page_num }}</a></li>
+                                {% endif %}
+                        
+                            {% endif %}
+                            {% endfor %}
+                            
+                        </ul>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="blog-sidebar">
+                            <div class="widget sidebar_widget widget_search">
+                                <form action="#" class="search-form input-group">
+                                    <input type="search" class="form-control widget_input" placeholder="Search">
+                                    <button type="submit"><i class="ti-search"></i></button>
+                                </form>
+                            </div>
+                            <div class="widget sidebar_widget widget_recent_post mt_60">
+                                <div class="widget_title">
+                                    <h3 class="f_p f_size_20 t_color3">Recent Post</h3>
+                                    <div class="border_bottom"></div>
+                                </div>
+                                {% for query in blog.items %}
+                                <div class="media post_item">
+                                    <img src="img/blog-grid/post_1.jpg" alt="">
+                                    <div class="media-body">
+                                        <a href="#">
+                                            <h3 class="f_size_16 f_p f_400">{{ query.topic }}</h3>
+                                        </a>
+                                        <div class="entry_post_info">
+                                            By: <a href="#">Admin</a>
+                                            {{ query.date.day }}-{{ query.date.month}}-{{ query.date.year }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                              
+                            </div>
+                            {% for object in know %}
+                        
+
+                            <div class="widget sidebar_widget widget_tag_cloud mt_60">
+                               
+                                
+                                    <img src="{{ url_for('static' ,filename='knowledge/' + object.image_file)}}" alt="" width="300" height="500">
+                                      
+                                       {{ object.topic }}
+                
+                            </div>
+                             
+                            
+                            {% endfor %}
+                        </div>
+                        {% for page_num in blog.iter_pages() %}              
+                        <li><a class="page-numbers current " href="{{ url_for('blog',page=page_num)}}">Read More <i class="ti-arrow-right"></i></a></a></li>             
+                        {% endfor %}
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+    {% endblock %}
